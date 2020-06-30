@@ -6,10 +6,25 @@ from django.contrib.auth.models import User
 
 # Create your models here.
 
+class Blogger(models.Model):
+    user = models.OneToOneField(
+        User,
+        on_delete=models.CASCADE,
+    )
+    first_name = models.CharField(max_length=100, null=True)
+    last_name = models.CharField(max_length=100, null=True)
+    bio = models.TextField(null=True)
+    nickname = models.CharField(max_length=100, null=True)
+
+    # METHODS
+    def __str__(self):
+        return self.nickname
+
+
 class BlogPost(models.Model):
     # FIELDS
     title = models.CharField(max_length=200)
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    author = models.ForeignKey('Blogger', on_delete=models.CASCADE, null=True)
     post = models.TextField()
     description = models.CharField(max_length=500)
     published = models.DateTimeField(default=timezone.now)
