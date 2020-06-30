@@ -13,3 +13,6 @@ class BlogPostAdmin(admin.ModelAdmin):
     fields = ['title', 'description', 'user', 'published', 'post']
     inlines = [CommentInline]
 
+@admin.register(Comment)
+class CommentAdmin(admin.ModelAdmin):
+    list_display = ['user', 'blog_post', 'published', 'pk']

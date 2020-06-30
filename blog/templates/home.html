@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% block title %}Home Page: Max's Mini Blog{% endblock title %}
+
+{% block content %}
+
+    <h1>Welcome to Max's Mini Blog</h1>
+
+    <p>We currently have {{ num_blog_posts}} blog {% if num_blog_posts == 1 %}post {% else %}posts{% endif %} with {{ num_comments }} {% if num_comments == 1 %}comment! {% else %}comments!{% endif %}</p>
+
+{% endblock content %}

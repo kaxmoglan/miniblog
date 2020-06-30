@@ -20,17 +20,27 @@ class BlogPost(models.Model):
     
     def get_absolute_url(self):
         return reverse("blog-detail", kwargs={"pk": self.pk})
+
+    class Meta:
+        ordering = ['-published']
+        # num_comments = Comment.objects.count()
+
     
 
 class Comment(models.Model):
     # FIELDS
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     comment = models.TextField()
-    blog_post = models.ForeignKey(BlogPost, on_delete=models.SET_NULL, null=True)
+    blog_post = models.ForeignKey(BlogPost, on_delete=models.CASCADE)
+    published = models.DateTimeField(auto_now=True)
 
     # METHODS
     def __str__(self):
-        return f'Comment: {self.pk} on {self.blog_post.title} by {self.user}'
+        return str(self.pk)
+
+    # META
+    class Meta:
+        ordering = ['-published']
 
 
 
