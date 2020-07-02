@@ -28,3 +28,20 @@ h1 {
 .blogger-post-list {
     margin-left: 50px;
 }
+
+.post-title {
+    margin-bottom: 0;
+}
+
+.sub-post-title {
+    color: grey;
+}
+
+.ltd-width-divider {
+    margin-right: 70%;
+}
+
+.publish-date {
+    color: grey;
+    text-align: right;
+}

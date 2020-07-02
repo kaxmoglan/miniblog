@@ -11,7 +11,7 @@
     <h2>Posts</h2>
     <div class="blogger-post-list">
         {% for post in blogger.blogpost_set.all %}
-            <h4><a href="">{{post.title}}</a></h4>
+            <h4><a href="{{ post.get_absolute_url }}">{{post.title}}</a></h4>
             <p>{{post.description}}</p>
         {% endfor %}
     </div>

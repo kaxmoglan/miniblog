@@ -19,6 +19,9 @@ def home(request):
 class BlogListView(generic.ListView):
     model = BlogPost
 
+class BlogDetailView(generic.DetailView):
+    model = BlogPost
+
 
 class BloggerListView(generic.ListView):
     model = Blogger
