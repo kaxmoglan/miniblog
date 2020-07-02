@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1>Bloggers</h1>
+
+    {% if blogger_list %}
+        <ul>
+            {% for blogger in blogger_list  %}
+                <li>
+                    <a href="">{{blogger.first_name}} {{blogger.last_name}} | {{ blogger.nickname }} ({{ blogger.user }})</a>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>There are no bloggers currently listed.</p>
+    {% endif %}
+{% endblock content %}

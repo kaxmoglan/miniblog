@@ -1,5 +1,7 @@
 from django.shortcuts import render
-from .models import BlogPost, Comment
+from django.views import generic
+
+from .models import BlogPost, Comment, Blogger
 
 # Create your views here.
 
@@ -13,3 +15,10 @@ def home(request):
     }
 
     return render(request, 'home.html', context=context)
+
+class BlogListView(generic.ListView):
+    model = BlogPost
+
+
+class BloggerListView(generic.ListView):
+    model = Blogger

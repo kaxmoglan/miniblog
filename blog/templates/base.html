@@ -4,12 +4,35 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
     <title>{% block title %}Max's Mini Blog{% endblock title %}</title>
 </head>
 <body>
 
-    {% block content %}
-    {% endblock content %}
+    <div class="container-fluid body-wrap">
+        <div class="row">
+            <div class="col-sm-2">
+                <nav>
+                    <ul class="sidebar-nav">
+                        <li><a href="{% url 'home' %}">Home</a></li>
+                        <li><a href="{% url 'blog-list' %}">Blog Posts</a></li>
+                        <li><a href="{% url 'blogger-list' %}">Bloggers</a></li>
+                        <hr>
+                        <li><a href="">Login</a></li>
+                    </ul>
+                </nav>
+            </div>
+
+            <div class="col-sm-10">
+                {% block content %}
+                {% endblock content %}
+            </div>
+        </div>
+    
+    </div>
+
+    
     
 </body>
 </html>
