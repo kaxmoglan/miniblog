@@ -19,4 +19,5 @@ urlpatterns = [
     path('', views.home, name='home'),
     path('allblogs/', views.BlogListView.as_view(), name='blog-list'),
     path('allbloggers/', views.BloggerListView.as_view(), name='blogger-list'),
+    path('blogger/<int:pk>', views.BloggerDetailView.as_view(), name='blogger-detail'),
 ]

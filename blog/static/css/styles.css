@@ -16,3 +16,15 @@ a {
 h1 {
     margin-bottom: 30px;
 }
+
+#blogger-title {
+    margin-bottom: 0;
+}
+
+.seperator {
+    margin-bottom: 30px;
+}
+
+.blogger-post-list {
+    margin-left: 50px;
+}

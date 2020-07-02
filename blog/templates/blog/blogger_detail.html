@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1 id="blogger-title">{{ blogger.first_name }} {{ blogger.last_name }} ({{ blogger.nickname }})</h1>
+    <hr class='seperator'>
+    <h2>Bio</h2>
+    <p class='blogger-post-list'>
+        {{ blogger.bio }}
+    </p>
+    <hr class='seperator'>
+    <h2>Posts</h2>
+    <div class="blogger-post-list">
+        {% for post in blogger.blogpost_set.all %}
+            <h4><a href="">{{post.title}}</a></h4>
+            <p>{{post.description}}</p>
+        {% endfor %}
+    </div>
+
+{% endblock content %}

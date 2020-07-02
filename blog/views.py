@@ -22,3 +22,6 @@ class BlogListView(generic.ListView):
 
 class BloggerListView(generic.ListView):
     model = Blogger
+
+class BloggerDetailView(generic.DetailView):
+    model = Blogger

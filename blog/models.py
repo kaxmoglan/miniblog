@@ -20,6 +20,10 @@ class Blogger(models.Model):
     def __str__(self):
         return self.nickname
 
+    def get_absolute_url(self):
+        return reverse("blogger-detail", args=[str(self.id)])
+    
+
 
 class BlogPost(models.Model):
     # FIELDS
