@@ -3,7 +3,7 @@
 {% block content %}
 
     <h1 class='post-title'>{{ blogpost.title }}</h1>
-    <h3 class='sub-post-title'>{{ blogpost.author }}</h3>
+    <a href=" {{ blogpost.author.get_absolute_url }}"><h3 class='sub-post-title'>{{ blogpost.author }}</h3></a>
     <hr class='ltd-width-divider'>
 
     <p>
