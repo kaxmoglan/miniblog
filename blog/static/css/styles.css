@@ -14,6 +14,7 @@ a {
 }
 
 h1 {
+    font-size: 3rem;
     margin-bottom: 30px;
 }
 
@@ -38,7 +39,7 @@ h1 {
 }
 
 .ltd-width-divider {
-    margin-right: 70%;
+    margin-right: 67%;
 }
 
 .publish-date {
@@ -61,4 +62,22 @@ h2 {
 
 h3 {
     font-size: 1.65rem;
+}
+
+.comment-box {
+    border-bottom: solid 1px lightgray;
+    /* border-radius: 5px; */
+    padding: 1rem;
+}
+
+.comment-user {
+    color: grey;
+    font-size: 1.2rem;
+    margin-bottom: 0;
+}
+
+.comment-published {
+    color: rgb(185, 184, 184);
+    font-size: 0.8rem;
+    
 }
