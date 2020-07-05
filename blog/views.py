@@ -20,6 +20,7 @@ def home(request):
 
 class BlogListView(generic.ListView):
     model = BlogPost
+    paginate_by = 5
 
 class BlogDetailView(generic.DetailView):
     model = BlogPost
