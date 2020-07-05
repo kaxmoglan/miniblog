@@ -8,10 +8,12 @@ from .models import BlogPost, Comment, Blogger
 def home(request):
     num_blog_posts = BlogPost.objects.all().count()
     num_comments = Comment.objects.all().count()
+    num_bloggers = Blogger.objects.all().count()
 
     context = {
         'num_blog_posts': num_blog_posts,
         'num_comments': num_comments,
+        'num_bloggers': num_bloggers,
     }
 
     return render(request, 'home.html', context=context)
