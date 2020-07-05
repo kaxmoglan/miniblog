@@ -2,15 +2,15 @@
 
 {% block content %}
     <h1>Bloggers</h1>
+    <hr>
 
     {% if blogger_list %}
-        <ul>
-            {% for blogger in blogger_list  %}
-                <li>
-                    <a href="{{ blogger.get_absolute_url }}">{{blogger.first_name}} {{blogger.last_name}} | {{ blogger.nickname }} ({{ blogger.user }})</a>
-                </li>
-            {% endfor %}
-        </ul>
+        {% for blogger in blogger_list %}
+            <h2><a href="{{ blogger.get_absolute_url }}">{{ blogger.first_name }} {{ blogger.last_name }}</a></h2>
+            <h3 class='sub-post-title'>{{ blogger.nickname }}</h3>
+            <p class='blog-list-date'>Username: {{ blogger.user }}</p>
+            <hr>
+        {% endfor %}
     {% else %}
         <p>There are no bloggers currently listed.</p>
     {% endif %}

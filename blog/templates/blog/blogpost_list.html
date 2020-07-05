@@ -2,15 +2,16 @@
 
 {% block content %}
     <h1>Blog Posts</h1>
+    <hr>
 
     {% if blogpost_list %}
-        <ul>
-            {% for post in blogpost_list  %}
-                <li>
-                    <a href="{{ post.get_absolute_url }}">{{ post.title }} </a>by <a href="{{ post.author.get_absolute_url }}">{{ post.author }}</a>
-                </li>
-            {% endfor %}
-        </ul>
+        {% for post in blogpost_list  %}
+            <h2><a href="{{ post.get_absolute_url }}">{{ post.title }}</a></h2>
+            <h3 class="sub-post-title"><a href="{{ post.author.get_absolute_url }}">{{ post.author }}</a></h3>
+            <p>{{ post.description }}</p>
+            <p class='blog-list-date'>{{ post.published }}</p>
+            <hr>
+        {% endfor %}
     {% else %}
         <p>There are no blog posts currently available.</p>
     {% endif %}

@@ -45,3 +45,12 @@ h1 {
     color: grey;
     text-align: right;
 }
+
+.blog-list-date {
+    font-size: 14px;
+    text-align: right;
+}
+
+.pagination {
+    margin-bottom: 50px;
+}
