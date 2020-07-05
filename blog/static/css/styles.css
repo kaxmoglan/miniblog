@@ -54,3 +54,11 @@ h1 {
 .pagination {
     margin-bottom: 50px;
 }
+
+h2 {
+    font-size: 1.9rem;
+}
+
+h3 {
+    font-size: 1.65rem;
+}
