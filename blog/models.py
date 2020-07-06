@@ -22,6 +22,10 @@ class Blogger(models.Model):
 
     def get_absolute_url(self):
         return reverse("blogger-detail", args=[str(self.id)])
+
+    # META
+    class Meta:
+        permissions = [('is_blogger', 'is Blogger'),]
     
 
 

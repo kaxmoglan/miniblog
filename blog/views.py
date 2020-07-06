@@ -1,5 +1,9 @@
 from django.shortcuts import render
 from django.views import generic
+from django.forms import ModelForm
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
+
 
 from .models import BlogPost, Comment, Blogger
 
@@ -31,3 +35,28 @@ class BloggerListView(generic.ListView):
 
 class BloggerDetailView(generic.DetailView):
     model = Blogger
+
+
+"""
+BLOGGER FEATURES
+"""
+
+class BloggerUpdate(PermissionRequiredMixin, UpdateView):
+    model = Blogger
+    fields = ['first_name', 'last_name', 'nickname', 'bio']
+    permission_required = 'blog.is_blogger'
+
+class BlogPostCreate(PermissionRequiredMixin, CreateView):
+    model = BlogPost
+    fields = ['title', 'description', 'post']
+    permission_required = 'blog.is_blogger'
+
+    # def get_initial(self):
+    #     return {
+    #         'author': self.request.user
+    #     }
+
+    def form_valid(self, form):
+        author = self.request.user.blogger
+        form.instance.author = author
+        return super(BlogPostCreate, self).form_valid(form)

@@ -4,7 +4,7 @@
 
 {% block content %}
 
-    <h1>Welcome to Max's Mini Blog</h1>
+    <h1>Welcome {% if user.is_authenticated %}back {{user.blogger.nickname}}!{% else %}to Max's Mini Blog{% endif %}</h1>
 
     <p>We currently have <a href=" {% url 'blog-list' %} ">{{ num_blog_posts}} blog {% if num_blog_posts == 1 %}post {% else %}posts{% endif %}</a> written by <a href="{% url 'blogger-list' %}">{{ num_bloggers }} {% if num_bloggers == 1 %}blogger {% else %}different bloggers{% endif %}</a> with {{ num_comments }} {% if num_comments == 1 %}comment! {% else %}comments!{% endif %}</p>
 

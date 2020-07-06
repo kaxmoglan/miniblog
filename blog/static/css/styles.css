@@ -81,3 +81,21 @@ h3 {
     font-size: 0.8rem;
     
 }
+
+.blogger-form > p > label {
+    display: block;
+    font-size: 1.4rem;
+    
+}
+
+.blogger-form > p::after {
+    content: '';
+    display: block;
+    margin-top: 2rem;
+    margin-right: 67%;
+    border-bottom: 1px solid lightgrey;
+}
+
+.blogger-form > button {
+    margin-bottom: 5rem;
+}

@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+
+{% block content %}
+
+    <h1>Update Bio</h1>
+    <hr>
+    {% if user.pk == blogger.pk %}
+        <form action="" method="post" class='blogger-form'>
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type='submit' class='btn btn-secondary'>Submit</button>
+        </form>
+    {% else %}
+        <p>You do not have permission to edit another user's profile.</p>
+    {% endif %}
+{% endblock %}

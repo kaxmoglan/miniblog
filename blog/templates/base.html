@@ -19,7 +19,15 @@
                         <li><a href="{% url 'blog-list' %}">Blog Posts</a></li>
                         <li><a href="{% url 'blogger-list' %}">Bloggers</a></li>
                         <hr>
-                        <li><a href="">Login</a></li>
+                        {% if user.is_authenticated %}
+                            <li><strong>{{user.blogger.nickname}}</strong></li>
+                            <hr>
+                            <li><a href="{% url 'blogger-detail' user.pk %}">My Profile</a></li>
+                            <li><a href="{% url 'post-create' %}">New Post</a></li>
+                            <li><a href=" {% url 'logout' %} ">Logout</a></li>
+                        {% else %}
+                            <li><a href="{% url 'login' %}">Login</a></li>
+                        {% endif %}
                     </ul>
                 </nav>
             </div>

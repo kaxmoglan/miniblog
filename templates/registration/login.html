@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block title %}MmB: Login{% endblock title %}
+
+{% block content %}
+    <h1>Login</h1>
+
+    {% if form.errors %}
+        <p>Your username and password didn't match. Please try again.</p>
+    {% endif %}
+    
+    <form action="{% url 'login'%}" method='post'>
+        {% csrf_token %}
+        {{ form.as_p }}
+
+        <button class='btn btn-secondary' type='submit'>Submit</button>
+    </form>
+
+
+{% endblock content %}
