@@ -16,7 +16,7 @@
         
     {% endif %}
     <hr class='seperator'>
-    <h2>Posts</h2>
+    <h2 class='blogger-detail-posts-title'>Posts</h2>
     <div class="blogger-post-list">
         {% for post in blogger.blogpost_set.all %}
             <h3><a href="{{ post.get_absolute_url }}">{{post.title}}</a></h3>
