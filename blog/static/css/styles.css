@@ -99,3 +99,19 @@ h3 {
 .blogger-form > button {
     margin-bottom: 5rem;
 }
+
+.edit-delete-post {
+    display: flex;
+    flex-flow: row;
+    justify-content: flex-end;
+}
+
+.edit-delete-post > *:nth-child(1) {
+    margin-right: 7px;
+    
+}
+
+.edit-bio-btn-container {
+    display: flex;
+    justify-content: flex-end;
+}

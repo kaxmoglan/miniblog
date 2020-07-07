@@ -10,7 +10,7 @@
             <form action="" method="post" class='blogger-form'>
                 {% csrf_token %}
                 {{ form.as_p }}
-                <button type="submit" class='btn btn-success'>Post!</button>
+                <button type="submit" class='btn btn-primary'>Update</button>
             </form>
         {% else %}
             <h1>Permission Denied</h1>

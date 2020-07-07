@@ -3,6 +3,7 @@ from django.views import generic
 from django.forms import ModelForm
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
+from django.urls import reverse_lazy
 
 
 from .models import BlogPost, Comment, Blogger
@@ -59,4 +60,9 @@ class BlogPostCreate(CreateView):
 class BlogPostUpdate(PermissionRequiredMixin, UpdateView):
     model = BlogPost
     fields = ['title', 'description', 'post']
+    permission_required = 'blog.is_blogger'
+
+class BlogPostDelete(PermissionRequiredMixin, DeleteView):
+    model = BlogPost
+    success_url = reverse_lazy('blog-list')
     permission_required = 'blog.is_blogger'

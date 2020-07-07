@@ -12,7 +12,9 @@
         {{ blogpost.post }}
     </p>
     {% if user.pk == blogpost.author.pk %}
-        <p class='blog-list-date'><a href="{% url 'post-update' blogpost.pk %}">Edit Post</a></p>
+        <div class="edit-delete-post">
+            <a class='btn-sm btn-primary' href="{% url 'post-update' blogpost.pk %}">Edit Post</a><a class='btn-sm btn-danger' href="{% url 'post-delete' blogpost.pk %}">Delete Post</a>
+        </div>
     {% endif %}
     <hr>
     <p class="publish-date">
