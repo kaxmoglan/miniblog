@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.views import generic
 from django.forms import ModelForm
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
@@ -27,8 +27,8 @@ class BlogListView(generic.ListView):
     model = BlogPost
     paginate_by = 5
 
-class BlogDetailView(generic.DetailView):
-    model = BlogPost
+# class BlogDetailView(generic.DetailView):
+    # model = BlogPost
 
 
 class BloggerListView(generic.ListView):
@@ -66,3 +66,13 @@ class BlogPostDelete(PermissionRequiredMixin, DeleteView):
     model = BlogPost
     success_url = reverse_lazy('blog-list')
     permission_required = 'blog.is_blogger'
+
+
+def blog_detail(request, pk):
+    blog_post = get_object_or_404(BlogPost, pk=pk)
+
+    context = {
+        'blogpost': blog_post,
+    }
+
+    return render(request, 'blog/blogpost_detail.html', context=context)

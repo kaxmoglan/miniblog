@@ -20,10 +20,11 @@ urlpatterns = [
     path('allblogs/', views.BlogListView.as_view(), name='blog-list'),
     path('allbloggers/', views.BloggerListView.as_view(), name='blogger-list'),
     path('blogger/<int:pk>', views.BloggerDetailView.as_view(), name='blogger-detail'),
-    path('blogpost/<int:pk>', views.BlogDetailView.as_view(), name='blog-detail'),
 
     path('blogger/<int:pk>/update/', views.BloggerUpdate.as_view(), name='blogger-update'),
     path('blogpost/create/', views.BlogPostCreate.as_view(), name='post-create'),
     path('blogpost/<int:pk>/update/', views.BlogPostUpdate.as_view(), name='post-update'),
     path('blogpost/<int:pk>/delete/', views.BlogPostDelete.as_view(), name='post-delete'),
+
+    path('blogpost/<int:pk>', views.blog_detail, name='blog-detail'),
 ]
