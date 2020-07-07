@@ -46,17 +46,17 @@ class BloggerUpdate(PermissionRequiredMixin, UpdateView):
     fields = ['first_name', 'last_name', 'nickname', 'bio']
     permission_required = 'blog.is_blogger'
 
-class BlogPostCreate(PermissionRequiredMixin, CreateView):
+class BlogPostCreate(CreateView):
     model = BlogPost
     fields = ['title', 'description', 'post']
-    permission_required = 'blog.is_blogger'
-
-    # def get_initial(self):
-    #     return {
-    #         'author': self.request.user
-    #     }
+    # permission_required = 'blog.is_blogger'
 
     def form_valid(self, form):
         author = self.request.user.blogger
         form.instance.author = author
         return super(BlogPostCreate, self).form_valid(form)
+
+class BlogPostUpdate(PermissionRequiredMixin, UpdateView):
+    model = BlogPost
+    fields = ['title', 'description', 'post']
+    permission_required = 'blog.is_blogger'

@@ -9,6 +9,9 @@
     <p>
         {{ blogpost.post }}
     </p>
+    {% if user.pk == blogpost.author.pk %}
+        <p class='blog-list-date'><a href="{% url 'post-update' blogpost.pk %}">Edit Post</a></p>
+    {% endif %}
     <hr>
     <p class="publish-date">
         Posted on {{ blogpost.published }}

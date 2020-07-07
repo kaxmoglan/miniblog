@@ -24,4 +24,5 @@ urlpatterns = [
 
     path('blogger/<int:pk>/update/', views.BloggerUpdate.as_view(), name='blogger-update'),
     path('blogpost/create/', views.BlogPostCreate.as_view(), name='post-create'),
+    path('blogpost/<int:pk>/update/', views.BlogPostUpdate.as_view(), name='post-update'),
 ]

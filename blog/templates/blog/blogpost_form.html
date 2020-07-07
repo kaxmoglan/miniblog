@@ -1,10 +1,32 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <h1>New Blog Post</h1>
-    <form action="" method="post" class='blogger-form'>
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit" class='btn btn-success'>Post!</button>
-    </form>
+
+    {% if blogpost.title %}
+        {% if user.pk == blogpost.author.pk %}
+            <h1>{{blogpost.title}}</h1>
+            <form action="" method="post" class='blogger-form'>
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit" class='btn btn-success'>Post!</button>
+            </form>
+        {% else %}
+            <h1>Permission Denied</h1>
+            <p>You do not have permission to edit another user's blog post.</p>
+        {% endif %}
+    {% else %}
+        {% if user.is_authenticated %}
+            <h1>New Blog Post</h1>
+            <form action="" method="post" class='blogger-form'>
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit" class='btn btn-success'>Post!</button>
+            </form>
+        {% else %}
+            <p>You have to be signed in to create a blog post!</p>
+            <a href="{% url 'login' %}"><p class='btn btn-secondary'>Sign In</p></a>
+        {% endif %}
+    {% endif %}
+ 
+    
 {% endblock %}
