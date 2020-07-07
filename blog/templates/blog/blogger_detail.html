@@ -8,7 +8,7 @@
         {{ blogger.bio }}
     </p>
     {% if user.pk == blogger.pk %}
-        <a href="{% url 'blogger-update' blogger.pk %}"><p class='blog-list-date'>Edit Bio</p></a>
+        <p class='blog-list-date'><a href="{% url 'blogger-update' blogger.pk %}">Edit Bio</a></p>
     {% endif %}
     <hr class='seperator'>
     <h2>Posts</h2>
