@@ -67,12 +67,32 @@ class BlogPostDelete(PermissionRequiredMixin, DeleteView):
     success_url = reverse_lazy('blog-list')
     permission_required = 'blog.is_blogger'
 
+from .forms import CommentForm
+from django.http import HttpResponseRedirect
+from django.urls import reverse
 
 def blog_detail(request, pk):
-    blog_post = get_object_or_404(BlogPost, pk=pk)
+    blogpost = get_object_or_404(BlogPost, pk=pk)
+
+    if request.method == 'POST':
+        form = CommentForm(request.POST)
+        
+        if form.is_valid():
+            comment = form.save(commit=False)
+            comment.blog_post = blogpost
+            comment.user = request.user
+            comment.save()
+            
+            url = reverse('blog-detail', kwargs={'pk': pk})
+            
+            return HttpResponseRedirect(url)
+
+    else:
+        form = CommentForm
 
     context = {
-        'blogpost': blog_post,
+        'blogpost': blogpost,
+        'form': form,
     }
 
     return render(request, 'blog/blogpost_detail.html', context=context)

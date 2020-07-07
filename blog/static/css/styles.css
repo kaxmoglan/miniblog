@@ -120,3 +120,12 @@ h3 {
     display: flex;
     justify-content: flex-end;
 }
+
+.comment-form > label {
+    display: none;
+}
+
+#id_comment {
+    display: block;
+    margin-bottom: 1rem;
+}
