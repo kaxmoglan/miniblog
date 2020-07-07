@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% block title %}Delete {{blogpost.title}}?{% endblock title %}
+
+{% block content %}
+    {% if user.pk == blogpost.author.pk %}
+        <h1>Confirm Delete</h1>
+        <h3>Are you sure you want to delete {{blogpost.title}}?</h3>
+        <form action="" method="POST">
+            {% csrf_token %}
+            <input type="submit" value="Yes, delete." class='btn btn-danger'>
+            <a class='btn btn-primary' href="{% url 'blog-detail' blogpost.pk %}">No, take me back</a>
+        </form>
+    {% else %}
+        <h1>Permission Denied</h1>
+        <p>You cannot delete other users' blog posts.</p>
+    {% endif %}
+{% endblock content %}
