@@ -1,5 +1,7 @@
 {% extends "base.html" %}
-
+{% block title %}
+    {% if blogpost.title %}Edit: {{blogpost.title}}{% else %}New Blog Post{% endif %}
+{% endblock title %}
 {% block content %}
 
     {% if blogpost.title %}

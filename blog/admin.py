@@ -38,3 +38,5 @@ class BloggerAdmin(admin.ModelAdmin):
     list_display = ['user', 'nickname', 'first_name', 'last_name']
     fields = ['user', 'first_name', 'last_name', 'nickname', 'bio']
     inlines = [BlogPostsInline]
+
+admin.site.site_header = "Max's Mini Blog Admin Portal"

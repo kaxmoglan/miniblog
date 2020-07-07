@@ -1,5 +1,7 @@
 {% extends 'base.html' %}
 
+{% block title %}{{blogger}}'s Profile{% endblock title %}
+
 {% block content %}
     <h1 id="blogger-title">{{ blogger.first_name }} {{ blogger.last_name }} ({{ blogger.nickname }})</h1>
     <hr class='seperator'>
