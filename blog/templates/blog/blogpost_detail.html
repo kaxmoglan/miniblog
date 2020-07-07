@@ -19,13 +19,17 @@
 
     <h2>Comments</h2>
     <hr>
-    
-        {% for comment in blogpost.comment_set.all %}
-            <div class="col-sm-4 comment-box">
-                <p>"{{ comment.comment }}"</p>            
-                <a href="{{ comment.user.blogger.get_absolute_url }}"><h3 class='comment-user'>- {{ comment.user }}</h3></a>
-                <p class='comment-published'>{{ comment.published }}</p>
-            </div>
-        {% endfor %}
+        {% if blogpost.comment_set.all.count == 0 %}
+            <p>There are no comments to display.</p>
+        {% else %}
+            {% for comment in blogpost.comment_set.all %}
+                <div class="col-sm-4 comment-box">
+                    <p>"{{ comment.comment }}"</p>            
+                    <a href="{{ comment.user.blogger.get_absolute_url }}"><h3 class='comment-user'>- {{ comment.user }}</h3></a>
+                    <p class='comment-published'>{{ comment.published }}</p>
+                </div>
+            {% endfor %}
+        {% endif %}
+        
 
 {% endblock content %}
