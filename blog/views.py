@@ -3,10 +3,12 @@ from django.views import generic
 from django.forms import ModelForm
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
-from django.urls import reverse_lazy
+from django.urls import reverse_lazy, reverse
+from django.http import HttpResponseRedirect
 
 
 from .models import BlogPost, Comment, Blogger
+from .forms import CommentForm
 
 # Create your views here.
 
@@ -67,9 +69,6 @@ class BlogPostDelete(PermissionRequiredMixin, DeleteView):
     success_url = reverse_lazy('blog-list')
     permission_required = 'blog.is_blogger'
 
-from .forms import CommentForm
-from django.http import HttpResponseRedirect
-from django.urls import reverse
 
 def blog_detail(request, pk):
     blogpost = get_object_or_404(BlogPost, pk=pk)

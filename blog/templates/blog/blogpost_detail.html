@@ -23,6 +23,17 @@
 
     <h2>Comments</h2>
     <hr>
+    {% if user.is_authenticated %}
+        <form class='comment-form' action="" method='post'>
+            {% csrf_token %}
+            {{form}}
+            <button type="submit" class='btn btn-success'>Comment</button>
+        </form>
+    {% else %}
+        <a href="{% url 'login' %}" class='btn btn-secondary'>Log in to leave a comment</a>
+    {% endif %}
+    
+    <hr class='comment-seperator'>
     {% if blogpost.comment_set.all.count == 0 %}
         <p>There are no comments to display.</p>
     {% else %}
@@ -34,11 +45,7 @@
             </div>
         {% endfor %}
     {% endif %}
-    <form class='comment-form' action="" method='post'>
-        {% csrf_token %}
-        {{form}}
-        <button type="submit" class='btn btn-success'>Comment</button>
-    </form>
+
 
 
 {% endblock content %}

@@ -121,6 +121,14 @@ h3 {
     justify-content: flex-end;
 }
 
+.comment-seperator {
+    margin-right: 67%;
+}
+
+.comment-form > button {
+    margin-bottom: 1rem;
+}
+
 .comment-form > label {
     display: none;
 }
