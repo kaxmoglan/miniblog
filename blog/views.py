@@ -1,7 +1,6 @@
 from django.shortcuts import render, get_object_or_404
-from django.views import generic
 from django.forms import ModelForm
-from django.views.generic.edit import CreateView, UpdateView, DeleteView
+from django.views.generic import CreateView, UpdateView, DeleteView, ListView, DetailView
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.urls import reverse_lazy, reverse
 from django.http import HttpResponseRedirect
@@ -25,7 +24,7 @@ def home(request):
 
     return render(request, 'home.html', context=context)
 
-class BlogListView(generic.ListView):
+class BlogListView(ListView):
     model = BlogPost
     paginate_by = 5
 
@@ -33,10 +32,10 @@ class BlogListView(generic.ListView):
     # model = BlogPost
 
 
-class BloggerListView(generic.ListView):
+class BloggerListView(ListView):
     model = Blogger
 
-class BloggerDetailView(generic.DetailView):
+class BloggerDetailView(DetailView):
     model = Blogger
 
 
