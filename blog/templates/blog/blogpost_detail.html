@@ -11,7 +11,7 @@
     <p>
         {{ blogpost.post }}
     </p>
-    {% if user.pk == blogpost.author.pk %}
+    {% if user.blogger.pk == blogpost.author.pk %}
         <div class="edit-delete-post">
             <a class='btn-sm btn-primary' href="{% url 'post-update' blogpost.pk %}">Edit Post</a><a class='btn-sm btn-danger' href="{% url 'post-delete' blogpost.pk %}">Delete Post</a>
         </div>
