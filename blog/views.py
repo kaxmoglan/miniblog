@@ -7,7 +7,7 @@ from django.http import HttpResponseRedirect
 
 
 from .models import BlogPost, Comment, Blogger
-from .forms import CommentForm
+from .forms import CommentForm, BloggerSignUpForm
 
 # Create your views here.
 
@@ -37,6 +37,7 @@ class BloggerListView(ListView):
 
 class BloggerDetailView(DetailView):
     model = Blogger
+
 
 
 """
@@ -94,3 +95,54 @@ def blog_detail(request, pk):
     }
 
     return render(request, 'blog/blogpost_detail.html', context=context)
+
+
+from django.contrib.auth import login, authenticate
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.models import Group
+
+def register(response):
+    form = UserCreationForm
+
+    if response.method == 'POST':
+        form = UserCreationForm(response.POST)
+        if form.is_valid():
+            user = form.save()
+            group = Group.objects.get(name='Blogger')
+            user.groups.add(group)
+
+            url = reverse('blogger-create')
+            return HttpResponseRedirect(url)
+    else:
+        form = UserCreationForm
+
+
+    context = {
+        'form': form,
+    }
+
+    return render(response, 'blog/register.html', context=context)
+
+from django.contrib.auth.models import User
+
+def blogger_sign_up(request):
+    if request.method == 'POST':
+        form = BloggerSignUpForm(request.POST)
+        
+        if form.is_valid():
+            form_complete = form.save(commit=False)
+            form_complete.user = request.user
+            form_complete.save()
+            
+            url = reverse('home')
+            
+            return HttpResponseRedirect(url)
+
+    else:
+        form = BloggerSignUpForm
+
+    context = {
+        'form': form,
+    }
+
+    return render(request, 'blog/blogger_register.html', context=context)

@@ -35,7 +35,7 @@ class BlogPostsInline(admin.TabularInline):
 
 @admin.register(Blogger)
 class BloggerAdmin(admin.ModelAdmin):
-    list_display = ['user', 'nickname', 'first_name', 'last_name']
+    list_display = ['user', 'nickname', 'first_name', 'last_name', 'pk']
     fields = ['user', 'first_name', 'last_name', 'nickname', 'bio']
     inlines = [BlogPostsInline]
 

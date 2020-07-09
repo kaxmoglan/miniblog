@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block title %}{{user}}: Create Profile{% endblock title %}
+
+{% block content %}
+
+    <h1>Create Profile</h1>
+    <hr>
+    {% if blogger.nickname %}
+        <p>You already have a profile!</p>
+        <a href="{% url 'blogger-detail' user.pk %}" class='btn btn-primary'>My Profile</a>
+    {% else %}
+        <form action="" method="post" class='blogger-form'>
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type='submit' class='btn btn-primary'>Update</button>
+        </form>
+    {% endif %}
+{% endblock %}

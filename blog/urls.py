@@ -27,4 +27,7 @@ urlpatterns = [
     path('blogpost/<int:pk>/delete/', views.BlogPostDelete.as_view(), name='post-delete'),
 
     path('blogpost/<int:pk>', views.blog_detail, name='blog-detail'),
+
+    path('register/', views.register, name='register'),
+    path('blogger/create/', views.blogger_sign_up, name='blogger-create'),
 ]
