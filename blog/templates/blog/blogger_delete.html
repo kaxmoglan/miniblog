@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block title %}Delete User: {{user}}?{% endblock title %}
+
+{% block content %}
+    <h1>Are you sure you want to delete your account?</h1>
+    <p>Type in your username <strong>{{user}}</strong> to confirm.</p>
+
+    <form action="" method='post'>
+        {% csrf_token %}
+        {{form}}
+        <button type="submit" class='btn btn-danger'>Yes, delete my account forever</button>
+        <a href="{% url 'blogger-detail' user.blogger.pk %}" class='btn btn-primary'>No, take me back</a>
+    </form>
+{% endblock content %}

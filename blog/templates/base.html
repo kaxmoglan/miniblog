@@ -20,7 +20,7 @@
                         <li><a href="{% url 'blogger-list' %}">Bloggers</a></li>
                         <hr>
                         {% if user.is_authenticated %}
-                            <li><strong>{% if blogger.nickname %}{{user.blogger.nickname}}{% else %}{{user.username}}{% endif %}</strong></li>
+                            <li><strong>{% if user.blogger.nickname %}{{user.blogger.nickname}}{% else %}{{user.username}}{% endif %}</strong></li>
                             <hr>
                             {% if user.blogger.nickname %}
                                 <li><a href="{% url 'blogger-detail' user.blogger.pk %}">My Profile</a></li>

@@ -4,8 +4,24 @@
 
 {% block content %}
 
-    <h1>Welcome {% if user.is_authenticated %}back {{user.blogger.nickname}}!{% else %}to Max's Mini Blog{% endif %}</h1>
+    <h1>Welcome {% if user.is_authenticated %}{% if user.blogger.nickname %}back {{user.blogger.nickname}}{% else %}to Max's Mini Blog, {{user}}{% endif %}!{% else %}to Max's Mini Blog{% endif %}</h1>
+    
+    {% if user.blogger.nickname %}
+        <h2 id='quick-link'>Quick Links</h2>
+        <hr id='quick-link-line'>
+        <a href="{% url 'blogger-detail' user.blogger.pk %}" class='btn btn-primary'>My Profile</a>
+        <a href="{% url 'post-create' %}" class='btn btn-success'>New Post</a>
+        
+    {% elif user.is_authenticated %}
+        <p>Create a profile to start writing blogs and posting comments</p>
+        <a href="{% url 'blogger-create' %}" class='btn btn-success'>Create Profile</a>
+    {% else %}
+        <p>We currently have <a href=" {% url 'blog-list' %} ">{{ num_blog_posts}} blog {% if num_blog_posts == 1 %}post {% else %}posts{% endif %}</a> written by <a href="{% url 'blogger-list' %}">{{ num_bloggers }} {% if num_bloggers == 1 %}blogger {% else %}different bloggers{% endif %}</a> with {{ num_comments }} {% if num_comments == 1 %}comment! {% else %}comments!{% endif %}</p>
+    {% endif %}
 
-    <p>We currently have <a href=" {% url 'blog-list' %} ">{{ num_blog_posts}} blog {% if num_blog_posts == 1 %}post {% else %}posts{% endif %}</a> written by <a href="{% url 'blogger-list' %}">{{ num_bloggers }} {% if num_bloggers == 1 %}blogger {% else %}different bloggers{% endif %}</a> with {{ num_comments }} {% if num_comments == 1 %}comment! {% else %}comments!{% endif %}</p>
+
+    
+
+    
 
 {% endblock content %}

@@ -17,3 +17,6 @@ class BloggerSignUpForm(forms.ModelForm):
   class Meta:
     model = Blogger
     fields = ('first_name', 'last_name', 'nickname', 'bio',)
+
+class DeleteUser(forms.Form):
+  username = forms.CharField()

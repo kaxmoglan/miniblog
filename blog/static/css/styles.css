@@ -137,3 +137,11 @@ h3 {
     display: block;
     margin-bottom: 1rem;
 }
+
+#quick-link {
+    margin-top: 2.8rem;
+}
+
+#quick-link-line {
+    margin-right: 85%;
+}

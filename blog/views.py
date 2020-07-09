@@ -1,4 +1,4 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.forms import ModelForm
 from django.views.generic import CreateView, UpdateView, DeleteView, ListView, DetailView
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
@@ -96,6 +96,9 @@ def blog_detail(request, pk):
 
     return render(request, 'blog/blogpost_detail.html', context=context)
 
+"""
+SIGN UP AND CREATE PROFILE
+"""
 
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.forms import UserCreationForm
@@ -106,12 +109,14 @@ def register(response):
 
     if response.method == 'POST':
         form = UserCreationForm(response.POST)
+
         if form.is_valid():
             user = form.save()
             group = Group.objects.get(name='Blogger')
-            user.groups.add(group)
+            user.groups.add(group)            
 
-            url = reverse('blogger-create')
+            # Redirect to profile login
+            url = reverse('login')
             return HttpResponseRedirect(url)
     else:
         form = UserCreationForm
@@ -135,7 +140,7 @@ def blogger_sign_up(request):
             form_complete.save()
             
             url = reverse('home')
-            
+
             return HttpResponseRedirect(url)
 
     else:
@@ -146,3 +151,27 @@ def blogger_sign_up(request):
     }
 
     return render(request, 'blog/blogger_register.html', context=context)
+
+
+"""
+DELETE PROFILE
+"""
+
+from .forms import DeleteUser
+
+def delete_user(request):
+    if request.method == 'POST':
+        form = DeleteUser(request.POST)
+
+        if form.is_valid():
+            delete_user = User.objects.get(username=form.cleaned_data['username'])
+            if delete_user == request.user:
+                delete_user.delete()
+                url = reverse('home')
+                return HttpResponseRedirect(url)
+    else:
+        form = DeleteUser()
+    
+    context = {'form': form}
+
+    return render(request, 'blog/blogger_delete.html', context=context)
