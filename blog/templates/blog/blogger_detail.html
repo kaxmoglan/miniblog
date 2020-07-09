@@ -25,5 +25,11 @@
             <hr>
         {% endfor %}
     </div>
+    {% if user.blogger.pk == blogger.pk %}
+        <hr>
+        <div class="edit-bio-btn-container">
+            <a class='btn btn-sm btn-danger' href="{% url 'blogger-delete' %}">Delete Account</a>
+        </div>
+    {% endif %}
 
 {% endblock content %}

@@ -9,12 +9,15 @@
         <p>Your username and password didn't match. Please try again.</p>
     {% endif %}
     
-    <form action="{% url 'login'%}" method='post'>
+    <form class='login-form' action="{% url 'login'%}" method='post'>
         {% csrf_token %}
         {{ form.as_p }}
 
-        <button class='btn btn-secondary' type='submit'>Submit</button>
+        <button class='btn btn-secondary' type='submit'>Login</button>
     </form>
+    <hr>
+    <h2 class='no-account'>No Account?</h2>
+    <a href="{% url 'register' %}" class='btn btn-primary'>Sign Up Here!</a>
 
 
 {% endblock content %}

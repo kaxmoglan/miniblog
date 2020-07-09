@@ -3,10 +3,11 @@
 {% block title %}Create An Account{% endblock title %}
 
 {% block content %}
+    <h1>Create An Account</h1>
 
-    <form action="" method='post' class='form-group'>
+    <form action="" method='post' class='register-form'>
         {% csrf_token %}
-        {{form}}
+        {{form.as_p}}
         <button type="submit" class='btn btn-success'>Sign Up!</button>
     </form>
 

@@ -145,3 +145,50 @@ h3 {
 #quick-link-line {
     margin-right: 85%;
 }
+
+.no-account {
+    margin-bottom: 1rem;
+    margin-top: 2rem;
+}
+
+/* REGISTER FORM */
+
+.register-form > p > label {
+    display: block;
+    font-size: 1.6rem;
+}
+
+.register-form > p > input {
+    display: block;
+}
+
+.register-form > p > span {
+    font-size: 0.8rem;
+}
+
+.register-form > ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    font-size: 0.8rem;
+}
+
+/* DELETE USER CONFIRM FORM */
+
+.delete-user-form {
+    margin-top: 2rem;
+}
+
+.delete-user-form > label {
+    font-weight: bold;
+    margin-right: 2rem;
+}
+
+.delete-user-form-buttons {
+    margin-top: 2rem;
+}
+
+.delete-user-form-buttons > button {
+    margin-right: 1.5rem;
+    
+}
