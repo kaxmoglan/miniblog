@@ -18,7 +18,7 @@
     <hr class='seperator'>
     <h2 class='blogger-detail-posts-title'>Posts</h2>
     <div class="blogger-post-list">
-        {% if blogger.blogpost_set.all > 0 %}
+        {% if blogger.blogpost_set.all.count > 0 %}
             {% for post in blogger.blogpost_set.all %}
                 <h3><a href="{{ post.get_absolute_url }}">{{post.title}}</a></h3>
                 <p>{{post.description}}</p>
