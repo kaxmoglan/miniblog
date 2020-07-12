@@ -18,15 +18,20 @@
     <hr class='seperator'>
     <h2 class='blogger-detail-posts-title'>Posts</h2>
     <div class="blogger-post-list">
-        {% for post in blogger.blogpost_set.all %}
-            <h3><a href="{{ post.get_absolute_url }}">{{post.title}}</a></h3>
-            <p>{{post.description}}</p>
-            <p class='blog-list-date'>{{ post.published }}</p>
+        {% if blogger.blogpost_set.all > 0 %}
+            {% for post in blogger.blogpost_set.all %}
+                <h3><a href="{{ post.get_absolute_url }}">{{post.title}}</a></h3>
+                <p>{{post.description}}</p>
+                <p class='blog-list-date'>{{ post.published }}</p>
+                <hr>
+            {% endfor %}
+        {% else %}
+            <p>This blogger has no posts.</p>
             <hr>
-        {% endfor %}
+        {% endif %}
+        
     </div>
     {% if user.blogger.pk == blogger.pk %}
-        <hr>
         <div class="edit-bio-btn-container">
             <a class='btn btn-sm btn-danger' href="{% url 'blogger-delete' %}">Delete Account</a>
         </div>
