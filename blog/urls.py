@@ -31,4 +31,5 @@ urlpatterns = [
     path('register/', views.register, name='register'),
     path('blogger/create/', views.blogger_sign_up, name='blogger-create'),
     path('blogger/delete/', views.delete_user, name='blogger-delete'),
+    path('blogger/delete/success/', views.delete_user_success, name='blogger-delete-sucess'),
 ]

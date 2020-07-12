@@ -164,10 +164,12 @@ def delete_user(request):
         form = DeleteUser(request.POST)
 
         if form.is_valid():
-            delete_user = User.objects.get(username=form.cleaned_data['username'])
-            if delete_user == request.user:
+            user_input = form.cleaned_data['username']
+            
+            if user_input == str(request.user):
+                delete_user = User.objects.get(username=user_input)
                 delete_user.delete()
-                url = reverse('home')
+                url = reverse('blogger-delete-sucess')
                 return HttpResponseRedirect(url)
     else:
         form = DeleteUser()
@@ -175,3 +177,6 @@ def delete_user(request):
     context = {'form': form}
 
     return render(request, 'blog/blogger_delete.html', context=context)
+
+def delete_user_success(request):
+    return render(request, 'blog/blogger_delete_success.html')
