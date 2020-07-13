@@ -18,5 +18,5 @@ class BloggerSignUpForm(forms.ModelForm):
     model = Blogger
     fields = ('first_name', 'last_name', 'nickname', 'bio',)
 
-class DeleteUser(forms.Form):
+class DeleteUserForm(forms.Form):
   username = forms.CharField()

@@ -157,11 +157,11 @@ def blogger_sign_up(request):
 DELETE PROFILE
 """
 
-from .forms import DeleteUser
+from .forms import DeleteUserForm
 
 def delete_user(request):
     if request.method == 'POST':
-        form = DeleteUser(request.POST)
+        form = DeleteUserForm(request.POST)
 
         if form.is_valid():
             user_input = form.cleaned_data['username']
@@ -172,9 +172,9 @@ def delete_user(request):
                 url = reverse('blogger-delete-sucess')
                 return HttpResponseRedirect(url)
             else:
-                form = DeleteUser()
+                form = DeleteUserForm()
     else:
-        form = DeleteUser()
+        form = DeleteUserForm()
     
     context = {'form': form}
 
