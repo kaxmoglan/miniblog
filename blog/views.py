@@ -171,6 +171,8 @@ def delete_user(request):
                 delete_user.delete()
                 url = reverse('blogger-delete-sucess')
                 return HttpResponseRedirect(url)
+            else:
+                form = DeleteUser()
     else:
         form = DeleteUser()
     
