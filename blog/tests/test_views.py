@@ -6,8 +6,9 @@ from django.urls import reverse
 from django.utils import timezone
 from django.contrib.auth.forms import UserCreationForm
 
-from blog.models import Blogger, BlogPost, Comment
-from blog.forms import CommentForm, DeleteUserForm
+from blog.models import *
+from blog.forms import *
+from blog.views import *
 
 """
 HOME PAGE VIEW
@@ -120,6 +121,9 @@ class BlogListViewTest(TestCase):
 
     @classmethod
     def setUpTestData(cls):
+
+        cls.view = BlogListView()
+
         test_user1 = User.objects.create_user(
             username='johndoe', password='top_secret'
         )
@@ -165,6 +169,9 @@ class BlogListViewTest(TestCase):
     TESTS
     """
 
+    def test_bloglistview_attrs(self):
+        self.assertEqual(self.view.model, BlogPost)
+
     def test_bloglistview_url(self):
         response = self.client.get('/blog/allblogs/')
         self.assertEqual(response.status_code, 200)
@@ -204,6 +211,9 @@ class BloggerListViewTest(TestCase):
 
     @classmethod
     def setUpTestData(cls):
+
+        cls.view = BloggerListView()
+
         num_bloggers = 8
 
         for blogger in range(num_bloggers):
@@ -223,6 +233,9 @@ class BloggerListViewTest(TestCase):
     """
     TESTS
     """
+
+    def test_bloggerlistview_attrs(self):
+        self.assertEqual(self.view.model, Blogger)
 
     def test_bloggerlistview_url(self):
         response = self.client.get('/blog/allbloggers/')
@@ -266,6 +279,8 @@ class BloggerDetailViewTest(TestCase):
     @classmethod
     def setUpTestData(cls):
 
+        cls.view = BloggerDetailView()
+
         test_user1 = User.objects.create_user(
                 username='testuser',
                 password='top_secrets'
@@ -282,6 +297,9 @@ class BloggerDetailViewTest(TestCase):
     """
     TESTS
     """
+
+    def test_blogdetailview_attrs(self):
+        self.assertEqual(self.view.model, Blogger)
 
     def test_bloggerdetailview_url(self):
         response = self.client.get('/blog/blogger/1')
@@ -307,6 +325,9 @@ class BloggerUpdateViewTest(TestCase):
     """
     @classmethod
     def setUpTestData(cls):
+
+        cls.view = BloggerUpdate()
+
         test_user = User.objects.create_user(
             username='testuser',
             password='top_secrets'
@@ -327,6 +348,9 @@ class BloggerUpdateViewTest(TestCase):
     """
     TESTS
     """
+    def test_bloggerupdateview_attrs(self):
+        self.assertEqual(self.view.model, Blogger)
+    
     def test_blogupdateview_url(self):
         login = self.client.login(username='testuser', password='top_secrets')
         response = self.client.get('/blog/blogger/1/update/')
@@ -351,10 +375,17 @@ BLOG POST CREATE VIEW
 """
 
 class BlogPostCreateViewTest(TestCase):
+
+    @classmethod
+    def setUpTestData(cls):
+        cls.view = BlogPostCreate()
    
     """
     TESTS
     """
+    def test_blogpostcreateview_attrs(self):
+        self.assertEqual(self.view.model, BlogPost)
+
     def test_blogpostcreateview_url(self):
         response = self.client.get('/blog/blogpost/create/')
         self.assertEqual(response.status_code, 200)
@@ -377,6 +408,9 @@ class BlogPostUpdateViewTest(TestCase):
     """
     @classmethod
     def setUpTestData(cls):
+
+        cls.view = BlogPostUpdate()
+
         test_user = User.objects.create_user(
             username='testuser',
             password='top_secrets'
@@ -404,6 +438,10 @@ class BlogPostUpdateViewTest(TestCase):
     """
     TESTS
     """
+    
+    def test_blogpostupdateview_attrs(self):
+        self.assertEqual(self.view.model, BlogPost)
+    
     def test_blogpostupdateview_url(self):
         login = self.client.login(username='testuser', password='top_secrets')
         response = self.client.get('/blog/blogpost/1/update/')
@@ -433,6 +471,9 @@ class BlogPostDeleteViewTest(TestCase):
     """
     @classmethod
     def setUpTestData(cls):
+
+        cls.view = BlogPostDelete()
+
         test_user = User.objects.create_user(
             username='testuser',
             password='top_secrets'
@@ -460,6 +501,10 @@ class BlogPostDeleteViewTest(TestCase):
     """
     TESTS
     """
+
+    def test_blogpostdeleteview_attrs(self):
+        self.assertEqual(self.view.model, BlogPost)
+
     def test_blogpostdeleteview_url(self):
         login = self.client.login(username='testuser', password='top_secrets')
         response = self.client.get('/blog/blogpost/1/delete/')
@@ -490,6 +535,7 @@ class BlogDetailViewTest(TestCase):
     """
     @classmethod
     def setUpTestData(cls):
+
         test_user = User.objects.create_user(
             username='testuser',
             password='top_secrets'
@@ -532,6 +578,7 @@ class BlogDetailViewTest(TestCase):
     """
     GENERIC TESTS
     """
+
     def test_blogdetailview_url(self):
         response = self.client.get('/blog/blogpost/1')
         self.assertEqual(response.status_code, 200)
@@ -591,7 +638,7 @@ class RegisterViewTests(TestCase):
         self.assertTrue(response.context['form'] == UserCreationForm)
 
 """
-DELETE USER  VIEW
+DELETE USER VIEW
 """
 
 class DeleteUserView(TestCase):
