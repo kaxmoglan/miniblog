@@ -4,8 +4,10 @@ from django.test import TestCase
 from django.contrib.auth.models import User, Permission
 from django.urls import reverse
 from django.utils import timezone
+from django.contrib.auth.forms import UserCreationForm
 
 from blog.models import Blogger, BlogPost, Comment
+from blog.forms import CommentForm, DeleteUserForm
 
 """
 HOME PAGE VIEW
@@ -258,7 +260,7 @@ BLOGGER DETAIL VIEW
 class BloggerDetailViewTest(TestCase):
 
     """
-    SET UP BLOGGER
+    SET UP 2 BLOGGERS WITH 1 POST EACH
     """
     
     @classmethod
@@ -276,8 +278,7 @@ class BloggerDetailViewTest(TestCase):
             bio = 'This is the bio',
             nickname = 'Testies'
         )     
-    
-    
+
     """
     TESTS
     """
@@ -477,3 +478,186 @@ class BlogPostDeleteViewTest(TestCase):
         login = self.client.login(username='testuser', password='top_secrets')
         response = self.client.get(reverse('post-delete', args=[1]))
         self.assertTemplateUsed(response, 'blog/blogpost_confirm_delete.html')
+
+"""
+BLOG DETAIL VIEW 
+"""
+
+class BlogDetailViewTest(TestCase):
+
+    """
+    SET UP BLOGGER WITH POST AND BLOGGER WITHOUT POST
+    """
+    @classmethod
+    def setUpTestData(cls):
+        test_user = User.objects.create_user(
+            username='testuser',
+            password='top_secrets'
+        )
+            
+        test_blogger = Blogger.objects.create(
+            user = test_user,
+            first_name = 'Test',
+            last_name = 'User',
+            bio = 'This is the bio',
+            nickname = 'Testies'
+        )  
+
+        permission = Permission.objects.get(name='is Blogger')
+        test_user.user_permissions.add(permission)  
+        
+        test_post = BlogPost.objects.create(
+            title = 'Blog Post Title',
+            author = test_blogger,
+            post = 'This is the blog post',
+            description = 'This is the blog post description',
+            published = timezone.now()
+        )
+
+        test_user2 = User.objects.create_user(
+            username='testuser2',
+            password='top_secrets'
+        )
+            
+        test_blogger2 = Blogger.objects.create(
+            user = test_user2,
+            first_name = 'Test',
+            last_name = 'User',
+            bio = 'This is the bio',
+            nickname = 'Testies2'
+        )  
+        permission = Permission.objects.get(name='is Blogger')
+        test_user2.user_permissions.add(permission)  
+
+    """
+    GENERIC TESTS
+    """
+    def test_blogdetailview_url(self):
+        response = self.client.get('/blog/blogpost/1')
+        self.assertEqual(response.status_code, 200)
+
+    def test_blogdetailview_accessible_by_name(self):
+        response = self.client.get(reverse('blog-detail', args=[1]))
+        self.assertEqual(response.status_code, 200)
+
+    def test_blogdetailview_not_accessible_for_anon_user(self):
+        response = self.client.get(reverse('blog-detail', args=[1]))
+        self.assertEqual(response.status_code, 200)
+
+    def test_blogdetailview_uses_correct_template(self):
+        response = self.client.get(reverse('blog-detail', args=[1]))
+        self.assertTemplateUsed(response, 'blog/blogpost_detail.html')
+
+    """
+    CONTEXT TESTS
+    """
+    def test_blogdetailview_accesses_blog(self):
+        response = self.client.get(reverse('blog-detail', args=[1]))
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.context['blogpost'], BlogPost.objects.get(pk='1'))
+
+    def test_blogdetailview_accesses_form(self):
+        response = self.client.get(reverse('blog-detail', args=[1]))
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.context['form'], CommentForm)
+
+    
+"""
+REGISTER VIEW 
+"""
+
+class RegisterViewTests(TestCase):
+
+    """
+    TESTS
+    """
+
+    def test_registerview_url(self):
+        response = self.client.get('/blog/register/')
+        self.assertEqual(response.status_code, 200)
+
+    def test_registerview_url_accessible_by_name(self):
+        response = self.client.get(reverse('register'))
+        self.assertEqual(response.status_code, 200)
+
+    def test_registerview_uses_correct_template(self):
+        response = self.client.get(reverse('register'))
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'blog/register.html')
+
+    def test_registerview_uses_correct_form(self):
+        response = self.client.get(reverse('register'))
+        self.assertEqual(response.status_code, 200)
+        self.assertTrue(response.context['form'] == UserCreationForm)
+
+"""
+DELETE USER  VIEW
+"""
+
+class DeleteUserView(TestCase):
+  
+    """
+    SET UP BLOGGER
+    """
+
+    @classmethod
+    def setUpTestData(cls):
+        test_user = User.objects.create_user(
+            username='testuser',
+            password='top_secrets'
+        )
+            
+        test_blogger = Blogger.objects.create(
+            user = test_user,
+            first_name = 'Test',
+            last_name = 'User',
+            bio = 'This is the bio',
+            nickname = 'Testies'
+        )  
+
+        permission = Permission.objects.get(name='is Blogger')
+        test_user.user_permissions.add(permission)  
+
+    """
+    GENERIC TESTS
+    """
+
+    def test_deleteuserview_url(self):
+        login = self.client.login(username='testuser', password='top_secrets')
+        response = self.client.get('/blog/blogger/delete/')
+        self.assertEqual(response.status_code, 200)
+    
+    def test_deleteuserview_accessible_by_name(self):
+        login = self.client.login(username='testuser', password='top_secrets')
+        response = self.client.get(reverse('blogger-delete'))
+        self.assertEqual(response.status_code, 200)
+    
+    def test_deleteuserview_uses_correct_template(self):
+        login = self.client.login(username='testuser', password='top_secrets')
+        response = self.client.get(reverse('blogger-delete'))
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'blog/blogger_delete.html')
+
+
+"""
+DELETE USER SUCCESS VIEW
+"""
+
+class DeleteUserSuccessViewTest(TestCase):
+
+    """
+    TESTS
+    """
+
+    def test_deleteusersuccessview_url(self):
+        response = self.client.get('/blog/blogger/delete/success/')
+        self.assertEqual(response.status_code, 200)
+
+    def test_deleteusersuccessview_url_accessible_by_name(self):
+        response = self.client.get(reverse('blogger-delete-sucess'))
+        self.assertEqual(response.status_code, 200)
+
+    def test_deleteusersuccessview_uses_correct_template(self):
+        response = self.client.get(reverse('blogger-delete-sucess'))
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'blog/blogger_delete_success.html')
