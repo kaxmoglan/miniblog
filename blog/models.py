@@ -26,6 +26,7 @@ class Blogger(models.Model):
     # META
     class Meta:
         permissions = [('is_blogger', 'is Blogger'),]
+        ordering = ['-nickname']
     
 
 

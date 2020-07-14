@@ -183,10 +183,119 @@ class BlogListViewTest(TestCase):
         self.assertTrue(response.context['is_paginated'] == True)
         self.assertTrue(len(response.context['blogpost_list']) == 5)
 
-    def test_lists_all_authors(self):
+    def test_bloglistview_lists_all_authors(self):
         # Get second page and confirm it has (exactly) remaining 3 items
         response = self.client.get(reverse('blog-list')+'?page=2')
         self.assertEqual(response.status_code, 200)
         self.assertTrue('is_paginated' in response.context)
         self.assertTrue(response.context['is_paginated'] == True)
         self.assertTrue(len(response.context['blogpost_list']) == 3)
+
+"""
+BLOGGER LIST VIEW
+"""
+
+class BloggerListViewTest(TestCase):
+    """
+    SET UP 8 BLOGGERS
+    """
+
+    @classmethod
+    def setUpTestData(cls):
+        num_bloggers = 8
+
+        for blogger in range(num_bloggers):
+            test_user = User.objects.create_user(
+                username=f'testuser{blogger}',
+                password='top_secrets'
+            )
+
+            test_blogger = Blogger.objects.create(
+                user = test_user,
+                first_name = 'Test',
+                last_name = 'User',
+                bio = 'This is the bio',
+                nickname = f'testies{blogger}'
+            )
+
+    """
+    TESTS
+    """
+
+    def test_bloggerlistview_url(self):
+        response = self.client.get('/blog/allbloggers/')
+        self.assertEqual(response.status_code, 200)
+
+    def test_bloggerlistview_url_accessible_by_name(self):
+        response = self.client.get(reverse('blogger-list'))
+        self.assertEqual(response.status_code, 200)
+
+    def test_bloggerlistview_uses_correct_template(self):
+        response = self.client.get(reverse('blogger-list'))
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'blog/blogger_list.html')
+
+    def test_bloggerlistview_pagination_is_five(self):
+        response = self.client.get(reverse('blogger-list'))
+        self.assertEqual(response.status_code, 200)
+        self.assertTrue('is_paginated' in response.context)
+        self.assertTrue(response.context['is_paginated'] == True)
+        self.assertTrue(len(response.context['blogger_list']) == 5)
+
+    def test_bloggerlistview_lists_all_authors(self):
+        # GET SECOND PAGE AND CONFIRM IT HAS EXACTLY REMAINING 3 BLOGGERS
+        response = self.client.get(reverse('blogger-list')+'?page=2')
+        self.assertEqual(response.status_code, 200)
+        self.assertTrue('is_paginated' in response.context)
+        self.assertTrue(response.context['is_paginated'] == True)
+        self.assertTrue(len(response.context['blogger_list']) == 3)
+
+
+"""
+BLOGGER DETAIL VIEW
+"""
+
+class BloggerDetailViewTest(TestCase):
+
+    """
+    SET UP BLOGGER
+    """
+    
+    @classmethod
+    def setUpTestData(cls):
+        """
+        BLOGGER 1
+        """
+        test_user1 = User.objects.create_user(
+                username='testuser',
+                password='top_secrets'
+        )
+        
+        test_blogger1 = Blogger.objects.create(
+            user = test_user1,
+            first_name = 'Test',
+            last_name = 'User',
+            bio = 'This is the bio',
+            nickname = 'Testies'
+        )     
+    
+    
+    """
+    TESTS
+    """
+
+    def test_bloggerdetailview_url(self):
+        response = self.client.get('/blog/blogger/1')
+        self.assertEqual(response.status_code, 200)
+
+    def test_bloggerdetailview_url_accessible_by_name(self):
+        response = self.client.get(reverse('blogger-detail', args=[1]))
+        self.assertEqual(response.status_code, 200)
+
+    def test_bloggerdetailview_uses_correct_template(self):
+        response = self.client.get(reverse('blogger-detail', args=[1]))
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'blog/blogger_detail.html')
+
+    
+    
