@@ -53,7 +53,6 @@ class BloggerUpdate(PermissionRequiredMixin, UpdateView):
 class BlogPostCreate(CreateView):
     model = BlogPost
     fields = ['title', 'description', 'post']
-    # permission_required = 'blog.is_blogger'
 
     def form_valid(self, form):
         author = self.request.user.blogger

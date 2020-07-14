@@ -1,7 +1,7 @@
 from django.test import TestCase
 
 # Create your tests here.
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, Permission
 from django.urls import reverse
 from django.utils import timezone
 
@@ -263,9 +263,7 @@ class BloggerDetailViewTest(TestCase):
     
     @classmethod
     def setUpTestData(cls):
-        """
-        BLOGGER 1
-        """
+
         test_user1 = User.objects.create_user(
                 username='testuser',
                 password='top_secrets'
@@ -298,4 +296,184 @@ class BloggerDetailViewTest(TestCase):
         self.assertTemplateUsed(response, 'blog/blogger_detail.html')
 
     
-    
+"""
+BLOGGER UPDATE VIEW
+"""
+
+class BloggerUpdateViewTest(TestCase):
+    """
+    SET UP BLOGGER
+    """
+    @classmethod
+    def setUpTestData(cls):
+        test_user = User.objects.create_user(
+            username='testuser',
+            password='top_secrets'
+        )
+            
+        test_blogger = Blogger.objects.create(
+            user = test_user,
+            first_name = 'Test',
+            last_name = 'User',
+            bio = 'This is the bio',
+            nickname = 'Testies'
+        )  
+
+        permission = Permission.objects.get(name='is Blogger')
+        test_user.user_permissions.add(permission)  
+        
+
+    """
+    TESTS
+    """
+    def test_blogupdateview_url(self):
+        login = self.client.login(username='testuser', password='top_secrets')
+        response = self.client.get('/blog/blogger/1/update/')
+        self.assertEqual(response.status_code, 200)
+
+    def test_blogupdateview_accessible_by_name(self):
+        login = self.client.login(username='testuser', password='top_secrets')
+        response = self.client.get(reverse('blogger-update', args=[1]))
+        self.assertEqual(response.status_code, 200)
+
+    def test_blogupdateview_not_accessible_for_anon_user(self):
+        response = self.client.get(reverse('blogger-update', args=[1]))
+        self.assertEqual(response.status_code, 302)
+
+    def test_blogupdateview_uses_correct_template(self):
+        login = self.client.login(username='testuser', password='top_secrets')
+        response = self.client.get(reverse('blogger-update', args=[1]))
+        self.assertTemplateUsed(response, 'blog/blogger_form.html')
+
+"""
+BLOG POST CREATE VIEW
+"""
+
+class BlogPostCreateViewTest(TestCase):
+   
+    """
+    TESTS
+    """
+    def test_blogpostcreateview_url(self):
+        response = self.client.get('/blog/blogpost/create/')
+        self.assertEqual(response.status_code, 200)
+
+    def test_blogpostcreateview_accessible_by_name(self):
+        response = self.client.get(reverse('post-create'))
+        self.assertEqual(response.status_code, 200)
+
+    def test_blogpostcreateview_uses_correct_template(self):
+        response = self.client.get(reverse('post-create'))
+        self.assertTemplateUsed(response, 'blog/blogpost_form.html')
+
+"""
+BLOG POST UPDATE VIEW
+"""
+
+class BlogPostUpdateViewTest(TestCase):
+    """
+    SET UP BLOGGER
+    """
+    @classmethod
+    def setUpTestData(cls):
+        test_user = User.objects.create_user(
+            username='testuser',
+            password='top_secrets'
+        )
+            
+        test_blogger = Blogger.objects.create(
+            user = test_user,
+            first_name = 'Test',
+            last_name = 'User',
+            bio = 'This is the bio',
+            nickname = 'Testies'
+        )  
+
+        permission = Permission.objects.get(name='is Blogger')
+        test_user.user_permissions.add(permission)  
+        
+        test_post = BlogPost.objects.create(
+            title = 'Blog Post Title',
+            author = test_blogger,
+            post = 'This is the blog post',
+            description = 'This is the blog post description',
+            published = timezone.now()
+        )
+
+    """
+    TESTS
+    """
+    def test_blogpostupdateview_url(self):
+        login = self.client.login(username='testuser', password='top_secrets')
+        response = self.client.get('/blog/blogpost/1/update/')
+        self.assertEqual(response.status_code, 200)
+
+    def test_blogpostupdateview_accessible_by_name(self):
+        login = self.client.login(username='testuser', password='top_secrets')
+        response = self.client.get(reverse('post-update', args=[1]))
+        self.assertEqual(response.status_code, 200)
+
+    def test_blogpostupdateview_not_accessible_for_anon_user(self):
+        response = self.client.get(reverse('post-update', args=[1]))
+        self.assertEqual(response.status_code, 302)
+
+    def test_blogpostupdateview_uses_correct_template(self):
+        login = self.client.login(username='testuser', password='top_secrets')
+        response = self.client.get(reverse('post-update', args=[1]))
+        self.assertTemplateUsed(response, 'blog/blogpost_form.html')
+
+"""
+BLOG POST DELETE VIEW
+"""
+
+class BlogPostDeleteViewTest(TestCase):
+    """
+    SET UP BLOGGER
+    """
+    @classmethod
+    def setUpTestData(cls):
+        test_user = User.objects.create_user(
+            username='testuser',
+            password='top_secrets'
+        )
+            
+        test_blogger = Blogger.objects.create(
+            user = test_user,
+            first_name = 'Test',
+            last_name = 'User',
+            bio = 'This is the bio',
+            nickname = 'Testies'
+        )  
+
+        permission = Permission.objects.get(name='is Blogger')
+        test_user.user_permissions.add(permission)  
+        
+        test_post = BlogPost.objects.create(
+            title = 'Blog Post Title',
+            author = test_blogger,
+            post = 'This is the blog post',
+            description = 'This is the blog post description',
+            published = timezone.now()
+        )
+
+    """
+    TESTS
+    """
+    def test_blogpostdeleteview_url(self):
+        login = self.client.login(username='testuser', password='top_secrets')
+        response = self.client.get('/blog/blogpost/1/delete/')
+        self.assertEqual(response.status_code, 200)
+
+    def test_blogpostdeleteview_accessible_by_name(self):
+        login = self.client.login(username='testuser', password='top_secrets')
+        response = self.client.get(reverse('post-delete', args=[1]))
+        self.assertEqual(response.status_code, 200)
+
+    def test_blogpostdeleteview_not_accessible_for_anon_user(self):
+        response = self.client.get(reverse('post-delete', args=[1]))
+        self.assertEqual(response.status_code, 302)
+
+    def test_blogpostdeleteview_uses_correct_template(self):
+        login = self.client.login(username='testuser', password='top_secrets')
+        response = self.client.get(reverse('post-delete', args=[1]))
+        self.assertTemplateUsed(response, 'blog/blogpost_confirm_delete.html')
