@@ -1,3 +1,6 @@
+#VSCode
+.vscode/
+
 # Text backup files
 *.bak
 
