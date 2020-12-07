@@ -28,7 +28,7 @@ SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', '^f(6ax&v)xhps^^1dg(qsr#%6^c%*^
 # DEBUG = True
 DEBUG = os.environ.get('DJANGO_DEBUG', '') != 'False'
 
-ALLOWED_HOSTS = ['127.0.0.1']
+ALLOWED_HOSTS = ['kaxmoglan-miniblog.herokuapp.com']
 
 
 # Application definition
